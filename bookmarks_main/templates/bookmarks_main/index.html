@@ -1,0 +1,44 @@
+{% extends './template.html' %}
+
+{% block content %}
+    <h2>Bookmarks</h2>
+
+    <div class="row m-3">
+        
+        <div class="col-lg-6">
+            {% if bookmarks %}
+                {% for bookmark in bookmarks %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="card-title">{{bookmark.bookmark_title}}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{bookmark.bookmark_notes}}</p>
+                                <a href="https://{{bookmark.bookmark_address}}" class="card-link">{{bookmark.bookmark_address}}</a><br>
+                                <a href="{% url 'delete-bookmark' bookmark.id %}" style="color: white;" class="btn btn-danger mt-3">delete</a>
+                            </div>
+                        </div>
+                    </form>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="col-lg-6">
+            <form method="post">
+                {% csrf_token %}
+                    <div class="bg-light p-2 mt-3">
+                        <label class="form-label">Bookmark title</label>
+                        <input type="text" name="new_bookmark_title" class="form-control">
+                        <label class="form-label mt-1">Link</label>
+                        <input type="text" name="new_bookmark_address" class="form-control">
+                        <label class="form-label mt-1">Notes</label>
+                        <textarea name="new_bookmark_notes" rows="4" cols="28" class="form-control"></textarea>
+                        <input class="btn btn-primary mt-3" type="submit" name="submit_new_bookmark" value="Submit">
+                    </div>
+            </form>
+        </div>
+    
+    </div>
+{% endblock %}
