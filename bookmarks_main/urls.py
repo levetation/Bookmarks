@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home-page'),
+    path('', views.home, name='home-main'),
+    path('userhome', views.userhome, name='home-page'),
     path('delete_bookmark/<str:id>', views.delete_bookmark, name='delete-bookmark'),
 ]

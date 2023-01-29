@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from .models import Saved_Bookmarks
+from django.contrib.auth.models import User
 
 # Create your views here.
-def home(request):
+def userhome(request):
     context = {}
-    bookmarks = Saved_Bookmarks.objects.order_by('-bookmark_save_date') # display in decending order
+    #bookmarks = Saved_Bookmarks.objects.order_by('-bookmark_save_date') # display in decending order
+    bookmarks = Saved_Bookmarks.objects.filter(author=request.user.id).order_by('-bookmark_save_date')
     context['bookmarks'] = bookmarks
 
     if request.method == 'POST' and 'submit_new_bookmark' in request.POST:
@@ -16,7 +18,8 @@ def home(request):
         new_bookmark = Saved_Bookmarks(
             bookmark_title = new_bookmark_title, 
             bookmark_address = new_bookmark_address,
-            bookmark_notes = new_bookmark_notes
+            bookmark_notes = new_bookmark_notes,
+            author = request.user,
         )
 
         new_bookmark.save()
@@ -32,3 +35,6 @@ def delete_bookmark(request, id):
     bookmark_checked = Saved_Bookmarks.objects.get(pk=id)
     bookmark_checked.delete()
     return redirect('home-page')
+
+def home(request):
+    return render(request, 'bookmarks_main/welcome.html', {})
