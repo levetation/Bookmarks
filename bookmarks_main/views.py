@@ -39,21 +39,16 @@ def delete_bookmark(request, id):
 def edit_bookmark(request, id):
     bookmark_to_edit = Saved_Bookmarks.objects.get(pk=id)
 
-    # if request.method == 'POST' and 'submit_new_bookmark' in request.POST:
+    if request.method == 'POST' and 'submit_edit_selected_bookmark' in request.POST:
     
-        # new_bookmark_title = request.POST['new_bookmark_title']
-        # new_bookmark_address = request.POST['new_bookmark_address']
-        # new_bookmark_notes = request.POST['new_bookmark_notes']
-        
-        # new_bookmark = Saved_Bookmarks(
-        #     bookmark_title = new_bookmark_title, 
-        #     bookmark_address = new_bookmark_address,
-        #     bookmark_notes = new_bookmark_notes,
-        #     author = request.user,
-        # )
+        new_bookmark_title = request.POST['new_bookmark_title']
+        new_bookmark_address = request.POST['new_bookmark_address']
+        new_bookmark_notes = request.POST['new_bookmark_notes']
 
-        # new_bookmark.save()
-        # return HttpResponseRedirect('')
+        bookmark_update = Saved_Bookmarks.objects.filter(pk=id).update(bookmark_title=new_bookmark_title, bookmark_address=new_bookmark_address, bookmark_notes=new_bookmark_notes)
+
+        return HttpResponseRedirect('')
+    
     return render(request, 'bookmarks_main/edit.html', {'bookmark_to_edit':bookmark_to_edit})
 
 def home(request):
