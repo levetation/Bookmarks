@@ -4,20 +4,10 @@
 
 <div class="container pt-3">
 	<div class="row">
-		<h1>Edit your bookmark</h1>
+		<h1 class="text-center">Edit your bookmark</h1>
 	</div>
 	<div class="row">
-		<div class="row">
-			{% if bookmark_to_edit %}
-				Bookmark Title: <p class="text-success">{{bookmark_to_edit.bookmark_title}}</p>
-			{% endif %}
-		</div>
-		{% if post %}
-			<div class="alert alert-danger" role="alert">
-				There was an error with your form...
-		    </div>
-		{% endif %}
-		<div class="row">
+		<div class="col-12 d-flex justify-content-center">
 		    <form method="post">
 	            {% csrf_token %}
 	                <div class="bg-light p-2 mt-3 border">
@@ -28,11 +18,15 @@
 	                    <label class="form-label mt-1">Notes</label>
 	                    <textarea name="new_bookmark_notes" rows="4" cols="28" class="form-control">{{bookmark_to_edit.bookmark_notes}}</textarea>
 	                    <!-- <input type="hidden" name="author"> -->
-	                    <input class="btn btn-primary mt-3" type="submit" name="submit_edit_selected_bookmark" value="Submit">
+	                    <input class="btn btn-primary mt-3" type="submit" name="submit_edit_selected_bookmark" value="Update">
 	                </div>
 	        </form>
     	</div>
-
+	</div>
+	<div class="row">
+		<div class="col-12 d-flex justify-content-center">
+			<a href="{% url 'home-page' %}" class="btn btn-light border mt-3">Back</a>
+		</div>
 	</div>
 </div>
 {% endblock %}

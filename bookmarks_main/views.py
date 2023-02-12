@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from .models import Saved_Bookmarks
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def userhome(request):
@@ -23,7 +24,8 @@ def userhome(request):
         )
 
         new_bookmark.save()
-        return HttpResponseRedirect('')
+        # return HttpResponseRedirect('')
+        return redirect(request.META['HTTP_REFERER'])
 
     if request.method == 'POST' and 'delete_bookmark' in request.POST:
         delete_bookmark(request, request.POST['bookmark_id'])
@@ -47,7 +49,9 @@ def edit_bookmark(request, id):
 
         bookmark_update = Saved_Bookmarks.objects.filter(pk=id).update(bookmark_title=new_bookmark_title, bookmark_address=new_bookmark_address, bookmark_notes=new_bookmark_notes)
 
-        return HttpResponseRedirect('')
+        messages.success(request, ("Bookmark updated"))
+
+        return redirect(request.META['HTTP_REFERER'])
     
     return render(request, 'bookmarks_main/edit.html', {'bookmark_to_edit':bookmark_to_edit})
 

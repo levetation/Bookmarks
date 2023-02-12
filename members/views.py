@@ -22,7 +22,7 @@ def login_user(request):
 
 def logout_user(request):
 	logout(request)
-	messages.success(request, ("you were logged out"))
+	messages.success(request, ("You were logged out"))
 	return redirect('home-main')
 
 def register_user(request):

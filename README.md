@@ -8,4 +8,3 @@ A bookmark website
 ## to-do
 
 * work on register page (user friendly)
-* re-design layout, i.e. make book marks smaller

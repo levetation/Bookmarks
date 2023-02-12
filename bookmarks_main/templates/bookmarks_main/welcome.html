@@ -3,11 +3,11 @@
 {% block content %}
 
 <div class="container pt-3">
-	<div class="col d-flex justify-content-center">
-		<h1>Welcome to Bookmarks.</h1>
+	<div class="col text-center d-flex justify-content-center">
+		<h1>Welcome to Bookmarks  <i class="fa-regular fa-bookmark"></i></h1>
 	</div>
 	<div class="col d-flex justify-content-center">
-		<p>Login/Register to get started!</p>
+		<p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register_user' %}">Register</a> to get started!</p>
 	</div>
 </div>
 {% endblock %}
