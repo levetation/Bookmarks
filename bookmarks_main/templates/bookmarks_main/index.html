@@ -26,24 +26,25 @@
                         <form method="post">
                             {% csrf_token %}
                             <div class="row p-1 mt-3 bg-light d-flex align-items-center border">
-                                <div class="col-2">
+                                
+                                <div class="col-md-2">
                                     <p class="card-title fw-bold">{{bookmark.bookmark_title}}</p>
                                 </div>
+                                
                                 <div class="col-md-4 text-break overflow-auto">
                                     <p class="card-text" style="max-height:25px;">
                                         <a href="{{bookmark.bookmark_address}}">{{bookmark.bookmark_address}}</a><br>
                                     </p>
                                 </div>
+                                
                                 <div class="col-md-4 text-break overflow-auto">
                                     <p class="card-text" style="max-height:25px;">{{bookmark.bookmark_notes}}</p>
                                 </div>
+                                
                                 <div class="col-md-2">
                                     <a href="{% url 'edit-bookmark' bookmark.id %}" class="text-success me-3">View</a>
                                     <a href="{% url 'delete-bookmark' bookmark.id %}" class="text-danger">Delete</a>
                                 </div>
-                                <!-- <div class="col-md-1">
-                                    <a href="{% url 'delete-bookmark' bookmark.id %}" class="text-danger">Delete</a>
-                                </div> -->
                             </div>
                         </form>
                     {% endfor %}
