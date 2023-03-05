@@ -11,14 +11,29 @@
 		    <form method="post">
 	            {% csrf_token %}
 	                <div class="bg-light p-2 mt-3 border">
-	                    <label class="form-label">Bookmark title</label>
-	                    <input type="text" name="new_bookmark_title" class="form-control" value={{bookmark_to_edit.bookmark_title}}>
-	                    <label class="form-label mt-1">Link</label>
-	                    <input type="text" name="new_bookmark_address" class="form-control" value={{bookmark_to_edit.bookmark_address}}>
-	                    <label class="form-label mt-1">Notes</label>
+	                    
+						<label class="form-label">Bookmark title</label>
+						<textarea name="new_bookmark_title" class="form-control">{{bookmark_to_edit.bookmark_title}}</textarea>
+
+						<label class="form-label mt-1">Link</label>
+						<textarea name="new_bookmark_address" class="form-control">{{bookmark_to_edit.bookmark_address}}</textarea>
+	                    
+						<label class="form-label mt-1">Notes</label>
 	                    <textarea name="new_bookmark_notes" rows="4" cols="28" class="form-control">{{bookmark_to_edit.bookmark_notes}}</textarea>
-	                    <!-- <input type="hidden" name="author"> -->
-	                    <input class="btn btn-primary mt-3" type="submit" name="submit_edit_selected_bookmark" value="Update">
+
+						<label class="form-label">Catagory</label>
+                        <input name="new_bookmark_catagory" class="form-control" list="datalistOptions" placeholder="Type new or select from existing">
+                        <datalist id="datalistOptions">
+                            {% if user.is_authenticated %}
+                                {% for catagory in catagories %}
+                                    <option value="{{catagory}}">
+                                {% endfor %}
+                            {% endif %}
+                        </datalist>
+	                    
+						<div class="col-12 d-flex justify-content-center">
+	                    	<input class="btn btn-primary mt-3" type="submit" name="submit_edit_selected_bookmark" value="Update">
+						</div>
 	                </div>
 	        </form>
     	</div>

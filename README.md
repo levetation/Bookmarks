@@ -2,9 +2,6 @@
 A bookmark website
 
 ## ideas
-* bookmarks can have categories
-* allow user to create their own folders
-
-## to-do
-
-* work on register page (user friendly)
+* organise bookmarks into categories
+* links are buttons/emoji's instead of string
+* add reminders app

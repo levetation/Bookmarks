@@ -8,40 +8,77 @@
             <form method="post">
                 {% csrf_token %}
                     <div class="bg-light p-2 mt-3 border">
+                        
                         <label class="form-label">Bookmark title</label>
                         <input type="text" name="new_bookmark_title" class="form-control">
+                        
                         <label class="form-label mt-1">Link</label>
                         <input type="text" name="new_bookmark_address" class="form-control">
+                        
                         <label class="form-label mt-1">Notes</label>
                         <textarea name="new_bookmark_notes" rows="4" cols="28" class="form-control"></textarea>
+
+                        <!-- Catagorise bookmarks -->
+                        <label class="form-label">Catagory</label>
+                        <input name="new_bookmark_catagory" class="form-control" list="datalistOptions" placeholder="Type new or select from existing">
+                        <datalist id="datalistOptions">
+                            {% if user.is_authenticated %}
+                                {% for catagory in catagories %}
+                                    <option value="{{catagory}}">
+                                {% endfor %}
+                            {% endif %}
+                        </datalist>
+
                         <!-- <input type="hidden" name="author"> -->
-                        <input class="btn btn-primary mt-3" type="submit" name="submit_new_bookmark" value="Submit">
+                        <div class="row ms-1 me-1 d-flex justify-content-center">
+                            <input class="btn btn-primary mt-3" type="submit" name="submit_new_bookmark" value="Submit">
+                        </div>
                     </div>
             </form>
         </div>
 
-        <div class="col-lg-8 order-lg-1 ms-3 me-3">
+        <div class="col-lg-8 order-md-1 ms-3 me-3">
             {% if user.is_authenticated %}
+
+                    <div class="row mt-3">
+                        <form method="post">
+                            {% csrf_token %}
+
+                                <input name="selected_bookmark_catagory" class="form-control" list="datalistOptions" placeholder="Type/Select catagory">
+
+                            <datalist id="datalistOptions">
+                                {% for catagory in catagories %}
+                                    <option value="{{catagory}}">
+                                {% endfor %}
+                            </datalist>
+
+                                <input class="btn btn-primary mt-1" type="submit" name="select_catagory" value="View">
+                        </form>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input class="btn btn-primary mt-1" type="submit" name="view_all" value="View All">
+                        </form>
+                    </div>
                     {% for bookmark in bookmarks %}
                         <form method="post">
                             {% csrf_token %}
                             <div class="row p-1 mt-3 bg-light d-flex align-items-center border">
                                 
-                                <div class="col-md-2">
+                                <div class="col-lg-2">
                                     <p class="card-title fw-bold">{{bookmark.bookmark_title}}</p>
                                 </div>
                                 
-                                <div class="col-md-4 text-break overflow-auto">
+                                <div class="col-lg-4 text-break overflow-auto">
                                     <p class="card-text" style="max-height:25px;">
                                         <a href="{{bookmark.bookmark_address}}">{{bookmark.bookmark_address}}</a><br>
                                     </p>
                                 </div>
                                 
-                                <div class="col-md-4 text-break overflow-auto">
+                                <div class="col-lg-4 text-break overflow-auto">
                                     <p class="card-text" style="max-height:25px;">{{bookmark.bookmark_notes}}</p>
                                 </div>
                                 
-                                <div class="col-md-2">
+                                <div class="col-lg-2">
                                     <a href="{% url 'edit-bookmark' bookmark.id %}" class="text-success me-3">View</a>
                                     <a href="{% url 'delete-bookmark' bookmark.id %}" class="text-danger">Delete</a>
                                 </div>
@@ -49,9 +86,6 @@
                         </form>
                     {% endfor %}
         </div>
-
-        
-
     </div>
     
     {% else %}
