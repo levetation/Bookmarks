@@ -4,10 +4,15 @@
 
     <div class="row mb-3 d-flex justify-content-center">
 
-        <div class="col-lg-3 order-lg-2 ">
+        <div class="col-lg-3 order-lg-2">
             <form method="post">
                 {% csrf_token %}
-                    <div class="bg-light p-2 mt-3 border">
+                <div class="row">
+                <button class="btn btn-primary mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Add Bookmark
+                </button>
+                
+                    <div class="collapse bg-light p-2 mt-3 border" id="collapseExample">
                         
                         <label class="form-label">Bookmark title</label>
                         <input type="text" name="new_bookmark_title" class="form-control">
@@ -28,37 +33,38 @@
                                 {% endfor %}
                             {% endif %}
                         </datalist>
-
+                    
                         <!-- <input type="hidden" name="author"> -->
                         <div class="row ms-1 me-1 d-flex justify-content-center">
                             <input class="btn btn-primary mt-3" type="submit" name="submit_new_bookmark" value="Submit">
                         </div>
                     </div>
+                </div>
+            </form>
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mt-3 p-2 bg-light border">
+                    <input name="selected_bookmark_catagory" class="form-control" list="datalistOptions" placeholder="Type/Select catagory">
+                    <datalist id="datalistOptions">
+                        {% for catagory in catagories %}
+                            <option value="{{catagory}}">
+                        {% endfor %}
+                    </datalist>
+                    <input class="btn btn mt-1" type="submit" name="select_catagory" value="View">
+                    <form method="post">
+                    {% csrf_token %}
+                    <input class="btn btn mt-1" type="submit" name="view_all" value="View All">
+                    </form>
+                </div>
             </form>
         </div>
 
         <div class="col-lg-8 order-md-1 ms-3 me-3">
             {% if user.is_authenticated %}
 
-                    <div class="row mt-3">
-                        <form method="post">
-                            {% csrf_token %}
+                    
 
-                                <input name="selected_bookmark_catagory" class="form-control" list="datalistOptions" placeholder="Type/Select catagory">
-
-                            <datalist id="datalistOptions">
-                                {% for catagory in catagories %}
-                                    <option value="{{catagory}}">
-                                {% endfor %}
-                            </datalist>
-
-                                <input class="btn btn-primary mt-1" type="submit" name="select_catagory" value="View">
-                        </form>
-                        <form method="post">
-                            {% csrf_token %}
-                            <input class="btn btn-primary mt-1" type="submit" name="view_all" value="View All">
-                        </form>
-                    </div>
+                    
                     {% for bookmark in bookmarks %}
                         <form method="post">
                             {% csrf_token %}
